@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+enum SampleItem { popupOne, popupTwo, popupThree }
+
+enum FavoriteGame { hades, dst, ror }
+
 void main() {
   runApp(const MyApp());
 }
@@ -13,28 +17,49 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.deepPurple,
       ),
-      home: HomePage(),
+      home: const MyHomePage(),
     );
   }
 }
 
-class HomePage extends StatelessWidget {
-  // edit here
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({Key? key}) : super(key: key);
+
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  SampleItem? selectedMenu;
+  String dropdownvalue = 'Tabby';
+  FavoriteGame _game = FavoriteGame.hades;
+
+  bool isChecked = false;
+  bool turnedOn = true;
+  double _currentSliderValue = 99;
+
+  // List of items in our dropdown menu
+  var items = [
+    'Tabby',
+    'Persian',
+    'Chonk',
+  ];
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 4,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("My App"),
+          title: const Text("Totally Not Random App"),
           bottom: const TabBar(
             tabs: [
-              Tab(text: "Tab 1"),
-              Tab(text: "Tab 2"),
-              Tab(text: "Tab 3"),
-              Tab(text: "Tab 4"),
+              Tab(icon: Icon(Icons.abc)),
+              Tab(icon: Icon(Icons.photo_camera)),
+              Tab(icon: Icon(Icons.mouse)),
+              Tab(icon: Icon(Icons.favorite)),
             ],
           ),
         ),
@@ -65,38 +90,146 @@ class HomePage extends StatelessWidget {
         )),
         body: TabBarView(
           children: [
-            const Text("Hi there"),
+            const Center(
+                child: Text(
+              "I have the best UI.",
+              // fontWeight: FontWeight.w700,
+              // fontStyle: FontStyle.italic,
+              textAlign: TextAlign.center,
+            )),
             const Image(
                 image: NetworkImage(
                     "https://pbs.twimg.com/media/FJxt5B9VUAALRka.jpg")),
 
             // tab 3
-            Column(children: const <Widget>[
-              ElevatedButton(
-                onPressed: null,
-                child: Text('Hi there'),
-              ),
-              FloatingActionButton(onPressed: null, child: Icon(Icons.add)),
-              TextButton(onPressed: null, child: Text("Text")),
-              IconButton(onPressed: null, icon: Icon(Icons.person)),
-              // DropdownButton(items: items, onChanged: onChanged),
-              // PopupMenuButton(itemBuilder: itemBuilder),
-            ]),
+            Column(
+              children: <Widget>[
+                const ElevatedButton(
+                  onPressed: null,
+                  child: Text('Click me!'),
+                ),
+                const FloatingActionButton(
+                    onPressed: null, child: Icon(Icons.add)),
+                const TextButton(
+                    onPressed: null, child: Text("You can't click me :D")),
+                const IconButton(onPressed: null, icon: Icon(Icons.money)),
+                DropdownButton(
+                  value: dropdownvalue,
+                  icon: const Icon(Icons.keyboard_arrow_down),
+                  items: items.map((String items) {
+                    return DropdownMenuItem(
+                      value: items,
+                      child: Text(items),
+                    );
+                  }).toList(),
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      dropdownvalue = newValue!;
+                    });
+                  },
+                ),
+                PopupMenuButton<SampleItem>(
+                  initialValue: selectedMenu,
+                  // Callback that sets the selected popup menu item.
+                  onSelected: (SampleItem item) {
+                    setState(() {
+                      selectedMenu = item;
+                    });
+                  },
+
+                  itemBuilder: (BuildContext context) =>
+                      <PopupMenuEntry<SampleItem>>[
+                    const PopupMenuItem<SampleItem>(
+                      value: SampleItem.popupOne,
+                      child: Text('Tom'),
+                    ),
+                    const PopupMenuItem<SampleItem>(
+                      value: SampleItem.popupTwo,
+                      child: Text('Jerry'),
+                    ),
+                    const PopupMenuItem<SampleItem>(
+                      value: SampleItem.popupThree,
+                      child: Text('Spike'),
+                    ),
+                  ],
+                ),
+              ],
+            ),
 
             // tab 4
-            Column(children: const <Widget>[
-              // Checkbox(
-              //   checkColor: Colors.white,
-              //   value: isChecked,
-              //   onChanged: (bool? value) {
-              //     setState(() {
-              //       isChecked = value!;
-              //     }
-              //     )
-              //   }
-              // )
-
-              // Radio
+            Column(children: <Widget>[
+              ListTile(
+                title: const Text('I agree 100% this UI is the best.'),
+                leading: Checkbox(
+                  checkColor: Colors.white,
+                  activeColor: Colors.black,
+                  value: isChecked,
+                  onChanged: (bool? value) {
+                    setState(() {
+                      isChecked = value!;
+                    });
+                  },
+                ),
+              ),
+              const Text('What is your favorite game?'),
+              ListTile(
+                title: const Text('Hades'),
+                leading: Radio(
+                  value: FavoriteGame.hades,
+                  groupValue: _game,
+                  onChanged: (FavoriteGame? value) {
+                    setState(() {
+                      _game = value!;
+                    });
+                  },
+                ),
+              ),
+              ListTile(
+                title: const Text('Don\'t Starve Together'),
+                leading: Radio(
+                  value: FavoriteGame.dst,
+                  groupValue: _game,
+                  onChanged: (FavoriteGame? value) {
+                    setState(() {
+                      _game = value!;
+                    });
+                  },
+                ),
+              ),
+              ListTile(
+                title: const Text('Risk of Rain'),
+                leading: Radio(
+                  value: FavoriteGame.ror,
+                  groupValue: _game,
+                  onChanged: (FavoriteGame? value) {
+                    setState(() {
+                      _game = value!;
+                    });
+                  },
+                ),
+              ),
+              Switch(
+                value: turnedOn,
+                activeColor: Colors.deepPurple,
+                onChanged: (bool value) {
+                  setState(() {
+                    turnedOn = value;
+                  });
+                },
+              ),
+              const Text('How would you rate the interface?'),
+              Slider(
+                value: _currentSliderValue,
+                max: 100,
+                min: 99,
+                divisions: 1,
+                label: _currentSliderValue.round().toString(),
+                onChanged: (double value) {
+                  setState(() {
+                    _currentSliderValue = value;
+                  });
+                },
+              ),
             ]),
           ],
         ),
