@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-enum SampleItem { popupOne, popupTwo, popupThree }
+enum PopUpItem { popOne, popTwo, popThree }
 
 enum FavoriteGame { hades, dst, ror }
 
@@ -32,15 +32,17 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  SampleItem? selectedMenu;
+  // default dropdown value
   String dropdownvalue = 'Tabby';
+
+  PopUpItem? selectedMenu;
   FavoriteGame _game = FavoriteGame.hades;
 
   bool isChecked = false;
   bool turnedOn = true;
   double _currentSliderValue = 99;
 
-  // List of items in our dropdown menu
+  // items for dropdown menu
   var items = [
     'Tabby',
     'Persian',
@@ -50,10 +52,11 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
+      // 4 tabs
       length: 4,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("Totally Not Random App"),
+          title: const Text("Lloyd's First App"),
           bottom: const TabBar(
             tabs: [
               Tab(icon: Icon(Icons.abc)),
@@ -63,6 +66,8 @@ class _MyHomePageState extends State<MyHomePage> {
             ],
           ),
         ),
+
+        // drawer for user settings
         drawer: Drawer(
             child: ListView(
           padding: EdgeInsets.zero,
@@ -93,8 +98,7 @@ class _MyHomePageState extends State<MyHomePage> {
             const Center(
                 child: Text(
               "I have the best UI.",
-              // fontWeight: FontWeight.w700,
-              // fontStyle: FontStyle.italic,
+              style: TextStyle(fontSize: 24, fontStyle: FontStyle.italic),
               textAlign: TextAlign.center,
             )),
             const Image(
@@ -104,15 +108,20 @@ class _MyHomePageState extends State<MyHomePage> {
             // tab 3
             Column(
               children: <Widget>[
+                const SizedBox(height: 30),
                 const ElevatedButton(
                   onPressed: null,
                   child: Text('Click me!'),
                 ),
+                const SizedBox(height: 30),
                 const FloatingActionButton(
                     onPressed: null, child: Icon(Icons.add)),
+                const SizedBox(height: 30),
                 const TextButton(
                     onPressed: null, child: Text("You can't click me :D")),
+                const SizedBox(height: 30),
                 const IconButton(onPressed: null, icon: Icon(Icons.money)),
+                const SizedBox(height: 30),
                 DropdownButton(
                   value: dropdownvalue,
                   icon: const Icon(Icons.keyboard_arrow_down),
@@ -128,27 +137,28 @@ class _MyHomePageState extends State<MyHomePage> {
                     });
                   },
                 ),
-                PopupMenuButton<SampleItem>(
+                const SizedBox(height: 30),
+                PopupMenuButton<PopUpItem>(
                   initialValue: selectedMenu,
                   // Callback that sets the selected popup menu item.
-                  onSelected: (SampleItem item) {
+                  onSelected: (PopUpItem item) {
                     setState(() {
                       selectedMenu = item;
                     });
                   },
 
                   itemBuilder: (BuildContext context) =>
-                      <PopupMenuEntry<SampleItem>>[
-                    const PopupMenuItem<SampleItem>(
-                      value: SampleItem.popupOne,
+                      <PopupMenuEntry<PopUpItem>>[
+                    const PopupMenuItem<PopUpItem>(
+                      value: PopUpItem.popOne,
                       child: Text('Tom'),
                     ),
-                    const PopupMenuItem<SampleItem>(
-                      value: SampleItem.popupTwo,
+                    const PopupMenuItem<PopUpItem>(
+                      value: PopUpItem.popTwo,
                       child: Text('Jerry'),
                     ),
-                    const PopupMenuItem<SampleItem>(
-                      value: SampleItem.popupThree,
+                    const PopupMenuItem<PopUpItem>(
+                      value: PopUpItem.popThree,
                       child: Text('Spike'),
                     ),
                   ],
@@ -158,11 +168,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
             // tab 4
             Column(children: <Widget>[
+              const SizedBox(height: 30),
               ListTile(
                 title: const Text('I agree 100% this UI is the best.'),
                 leading: Checkbox(
                   checkColor: Colors.white,
-                  activeColor: Colors.black,
+                  activeColor: Colors.deepPurple,
                   value: isChecked,
                   onChanged: (bool? value) {
                     setState(() {
@@ -171,6 +182,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   },
                 ),
               ),
+              const SizedBox(height: 30),
               const Text('What is your favorite game?'),
               ListTile(
                 title: const Text('Hades'),
@@ -208,15 +220,21 @@ class _MyHomePageState extends State<MyHomePage> {
                   },
                 ),
               ),
-              Switch(
-                value: turnedOn,
-                activeColor: Colors.deepPurple,
-                onChanged: (bool value) {
-                  setState(() {
-                    turnedOn = value;
-                  });
-                },
+              const SizedBox(height: 30),
+              ListTile(
+                leading: const FlutterLogo(),
+                title: const Text('Toggle nothing.'),
+                trailing: Switch(
+                  value: turnedOn,
+                  activeColor: Colors.deepPurple,
+                  onChanged: (bool value) {
+                    setState(() {
+                      turnedOn = value;
+                    });
+                  },
+                ),
               ),
+              const SizedBox(height: 30),
               const Text('How would you rate the interface?'),
               Slider(
                 value: _currentSliderValue,
