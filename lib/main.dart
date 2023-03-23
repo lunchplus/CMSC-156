@@ -16,9 +16,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.deepPurple,
-      ),
+      theme: ThemeData(primarySwatch: Colors.deepOrange),
       home: const MyHomePage(),
     );
   }
@@ -39,7 +37,7 @@ class _MyHomePageState extends State<MyHomePage> {
   FavoriteGame _game = FavoriteGame.hades;
 
   bool isChecked = false;
-  bool turnedOn = true;
+  bool turnedOn = false;
   double _currentSliderValue = 99;
 
   // items for dropdown menu
@@ -98,7 +96,7 @@ class _MyHomePageState extends State<MyHomePage> {
             // tab 1
             const Center(
                 child: Text(
-              "I have the best UI. periodt.",
+              "I have the best UI.",
               style: TextStyle(fontSize: 24, fontStyle: FontStyle.italic),
               textAlign: TextAlign.center,
             )),
@@ -145,9 +143,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 PopupMenuButton<PopUpItem>(
                   initialValue: selectedMenu,
                   // Callback that sets the selected popup menu item.
-                  onSelected: (PopUpItem item) {
+                  onSelected: (PopUpItem? item) {
                     setState(() {
-                      selectedMenu = item;
+                      selectedMenu = item!;
                     });
                   },
 
@@ -201,7 +199,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
               ListTile(
-                title: const Text('Don\'t Starve Together'),
+                title: const Text('Dota 2'),
                 leading: Radio(
                   value: FavoriteGame.dst,
                   groupValue: _game,
@@ -231,9 +229,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 trailing: Switch(
                   value: turnedOn,
                   activeColor: Colors.deepPurple,
-                  onChanged: (bool value) {
+                  onChanged: (bool? value) {
                     setState(() {
-                      turnedOn = value;
+                      turnedOn = value!;
                     });
                   },
                 ),
