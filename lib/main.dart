@@ -95,12 +95,15 @@ class _MyHomePageState extends State<MyHomePage> {
         )),
         body: TabBarView(
           children: [
+            // tab 1
             const Center(
                 child: Text(
-              "I have the best UI.",
+              "I have the best UI. periodt.",
               style: TextStyle(fontSize: 24, fontStyle: FontStyle.italic),
               textAlign: TextAlign.center,
             )),
+
+            // tab 2
             const Image(
                 image: NetworkImage(
                     "https://pbs.twimg.com/media/FJxt5B9VUAALRka.jpg")),
@@ -109,18 +112,19 @@ class _MyHomePageState extends State<MyHomePage> {
             Column(
               children: <Widget>[
                 const SizedBox(height: 30),
-                const ElevatedButton(
-                  onPressed: null,
-                  child: Text('Click me!'),
+                ElevatedButton(
+                  onPressed: () {},
+                  child: const Text('Nothing will happen!'),
                 ),
                 const SizedBox(height: 30),
-                const FloatingActionButton(
-                    onPressed: null, child: Icon(Icons.add)),
+                FloatingActionButton(
+                    onPressed: () {}, child: const Icon(Icons.add)),
                 const SizedBox(height: 30),
-                const TextButton(
-                    onPressed: null, child: Text("You can't click me :D")),
+                TextButton(
+                    onPressed: () {},
+                    child: const Text("Also nothing will happen")),
                 const SizedBox(height: 30),
-                const IconButton(onPressed: null, icon: Icon(Icons.money)),
+                IconButton(onPressed: () {}, icon: const Icon(Icons.alarm)),
                 const SizedBox(height: 30),
                 DropdownButton(
                   value: dropdownvalue,
@@ -151,15 +155,15 @@ class _MyHomePageState extends State<MyHomePage> {
                       <PopupMenuEntry<PopUpItem>>[
                     const PopupMenuItem<PopUpItem>(
                       value: PopUpItem.popOne,
-                      child: Text('Tom'),
+                      child: Text('Report'),
                     ),
                     const PopupMenuItem<PopUpItem>(
                       value: PopUpItem.popTwo,
-                      child: Text('Jerry'),
+                      child: Text('Flag'),
                     ),
                     const PopupMenuItem<PopUpItem>(
                       value: PopUpItem.popThree,
-                      child: Text('Spike'),
+                      child: Text('Exit'),
                     ),
                   ],
                 ),
